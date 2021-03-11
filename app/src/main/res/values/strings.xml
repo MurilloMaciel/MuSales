@@ -1,3 +1,64 @@
 <resources>
     <string name="app_name">MuSales</string>
+    <string name="title_activity_meus_anuncios">Meus Anúncios</string>
+    <string name="hint_phone_number">(xx) xxxxx-xxxx</string>
+
+    <!--    menu-->
+    <string name="menu_my_ads">My ads</string>
+    <string name="menu_login">Login</string>
+    <string name="menu_logout">Logout</string>
+    <string name="locale">REGIÃO</string>
+    <string name="category">CATEGORIA</string>
+    <string name="title">Título</string>
+    <string name="value">Valor</string>
+    <string name="register_ad">CADASTRAR ANÚNCIO</string>
+    <string name="description">Descrição</string>
+    <string name="register">Cadastre-se</string>
+    <string name="login">Logar</string>
+    <string name="signup">ACESSAR</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="show_phone_number">VER TELEFONE</string>
+
+    <string-array name="estados">
+        <item>AC</item>
+        <item>AL</item>
+        <item>AM</item>
+        <item>AP</item>
+        <item>BA</item>
+        <item>CE</item>
+        <item>DF</item>
+        <item>ES</item>
+        <item>GO</item>
+        <item>MA</item>
+        <item>MG</item>
+        <item>MS</item>
+        <item>MT</item>
+        <item>PA</item>
+        <item>PB</item>
+        <item>PE</item>
+        <item>PI</item>
+        <item>PR</item>
+        <item>RJ</item>
+        <item>RN</item>
+        <item>RO</item>
+        <item>RR</item>
+        <item>RS</item>
+        <item>SC</item>
+        <item>SE</item>
+        <item>SP</item>
+        <item>TO</item>
+    </string-array>
+
+    <string-array name="categorias">
+        <item>Automóveis</item>
+        <item>Imóveis</item>
+        <item>Eletrônicos</item>
+        <item>Moda</item>
+        <item>Esportes</item>
+        <item>Música</item>
+        <item>Infantil</item>
+        <item>Empregos</item>
+    </string-array>
+
 </resources>

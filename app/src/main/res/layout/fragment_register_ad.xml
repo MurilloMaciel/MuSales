@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.maciel.murillo.musales.presentation.register_ad.RegisterAdViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_ad_image_1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@id/iv_ad_image_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/standard" />
+
+            <ImageView
+                android:id="@+id/iv_ad_image_2"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@id/iv_ad_image_3"
+                app:layout_constraintStart_toEndOf="@id/iv_ad_image_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/standard" />
+
+            <ImageView
+                android:id="@+id/iv_ad_image_3"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_ad_image_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/standard" />
+
+            <Spinner
+                android:id="@+id/spn_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/spn_category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_ad_image_1" />
+
+            <Spinner
+                android:id="@+id/spn_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spn_state"
+                app:layout_constraintTop_toBottomOf="@id/iv_ad_image_3" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="@string/title"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spn_state" />
+
+            <com.blackcat.currencyedittext.CurrencyEditText
+                android:id="@+id/et_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="@string/value"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                app:decimal_digits="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_title" />
+
+            <com.santalu.maskedittext.MaskEditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="@string/hint_phone_number"
+                android:inputType="phone"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_value"
+                app:met_mask="(##) #####-####" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="@string/description"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_phone" />
+
+            <Button
+                android:id="@+id/btn_register_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="@{() -> vm.onClickRegisterAd()}"
+                android:text="@string/register_ad"
+                android:theme="@style/custom_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_description" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
