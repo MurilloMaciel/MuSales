@@ -32,7 +32,8 @@
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:menu="@menu/menu_main"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@{vm.toolbarTitle}" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

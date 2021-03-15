@@ -14,4 +14,7 @@ val domainModule = module {
     factory { RegisterAdUseCase(repository = get()) }
     factory { SignupUseCase(repository = get()) }
     factory { UpdateAdUseCase(repository = get()) }
+    factory { GetMyAdsUseCase(repository = get()) }
+    factory { GetAdsFilteredUseCase(repository = get()) }
+    factory { ReadUserIdUseCase(repository = get()) }
 }

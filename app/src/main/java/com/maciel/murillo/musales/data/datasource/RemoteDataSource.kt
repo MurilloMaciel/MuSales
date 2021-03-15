@@ -1,12 +1,18 @@
 package com.maciel.murillo.musales.data.datasource
 
 import com.maciel.murillo.musales.data.model.AdData
+import com.maciel.murillo.musales.data.model.CategoryData
+import com.maciel.murillo.musales.data.model.StateData
 
 interface RemoteDataSource {
 
     suspend fun registerAd(ad: AdData)
 
     suspend fun getAllAds(): List<AdData>
+
+    suspend fun getAdsFiltered(state: StateData, category: CategoryData): List<AdData>
+
+    suspend fun getMyAds(): List<AdData>
 
     suspend fun getAd(id: String): AdData
 

@@ -14,7 +14,7 @@ class AuthDataSourceImpl(
 
     override suspend fun logout() = auth.signOut()
 
-    override suspend fun signup(name: String, email: String, password: String): FirebaseUser? {
+    override suspend fun signup(email: String, password: String): FirebaseUser? {
         try {
             val result: AuthResult = auth.createUserWithEmailAndPassword(email, password).await()
             return result.user

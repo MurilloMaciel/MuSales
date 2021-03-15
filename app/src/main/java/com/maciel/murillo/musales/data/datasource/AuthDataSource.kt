@@ -6,7 +6,7 @@ interface AuthDataSource {
 
     suspend fun isUserLogged(): Boolean
 
-    suspend fun signup(name: String, email: String, password: String): FirebaseUser?
+    suspend fun signup(email: String, password: String): FirebaseUser?
 
     suspend fun login(email: String, password: String): FirebaseUser?
 

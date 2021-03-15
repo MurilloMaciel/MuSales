@@ -21,6 +21,17 @@
     <string name="password">Senha</string>
     <string name="show_phone_number">VER TELEFONE</string>
 
+    <string name="auth_error_password_empty">Password cannot be empty</string>
+    <string name="auth_error_name_empty">Name cannot be empty</string>
+    <string name="auth_error_email_empty">E-mail cannot be empty</string>
+    <string name="auth_error_invalid_email">Need a valid e-mail</string>
+    <string name="auth_error_strongest_password">Use a strongest password</string>
+    <string name="auth_error_valid_email">Need a valid e-mail</string>
+    <string name="auth_error_account_already_exists">Account already exists</string>
+    <string name="auth_error_info_doesnt_exists">E-mail doesn\'t match any registered user</string>
+    <string name="auth_error_user_not_exists">Unregistered user</string>
+    <string name="auth_error_generic">An error occurred, try again</string>
+
     <string-array name="estados">
         <item>AC</item>
         <item>AL</item>
