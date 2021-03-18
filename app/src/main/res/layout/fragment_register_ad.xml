@@ -23,6 +23,7 @@
                 android:id="@+id/iv_ad_image_1"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:onClick="@{() -> vm.onClickImage1()}"
                 app:layout_constraintEnd_toStartOf="@id/iv_ad_image_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -32,6 +33,7 @@
                 android:id="@+id/iv_ad_image_2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:onClick="@{() -> vm.onClickImage1()}"
                 app:layout_constraintEnd_toStartOf="@id/iv_ad_image_3"
                 app:layout_constraintStart_toEndOf="@id/iv_ad_image_1"
                 app:layout_constraintTop_toTopOf="parent"
@@ -41,6 +43,7 @@
                 android:id="@+id/iv_ad_image_3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:onClick="@{() -> vm.onClickImage1()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_ad_image_2"
                 app:layout_constraintTop_toTopOf="parent"
@@ -50,17 +53,25 @@
                 android:id="@+id/spn_state"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:entries="@{vm.states}"
                 app:layout_constraintEnd_toStartOf="@id/spn_category"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_ad_image_1" />
+                app:layout_constraintTop_toBottomOf="@id/iv_ad_image_1"
+                app:newValue="@{vm.stateSelected}"
+                app:onItemSelected="@{(newValue) -> vm.onStateChange(String.valueOf(newValue))}" />
 
             <Spinner
                 android:id="@+id/spn_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:entries="@{vm.categories}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/spn_state"
-                app:layout_constraintTop_toBottomOf="@id/iv_ad_image_3" />
+                app:layout_constraintTop_toBottomOf="@id/iv_ad_image_3"
+                app:newValue="@{vm.categorySelected}"
+                app:onItemSelected="@{(newValue) -> vm.onCategoryChange(String.valueOf(newValue))}" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_title"
@@ -72,6 +83,7 @@
                 android:hint="@string/title"
                 android:inputType="textPersonName"
                 android:padding="8dp"
+                android:text="@={vm.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spn_state" />
@@ -86,6 +98,7 @@
                 android:hint="@string/value"
                 android:inputType="textPersonName"
                 android:padding="8dp"
+                android:text="@={vm.price}"
                 app:decimal_digits="0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -101,6 +114,7 @@
                 android:hint="@string/hint_phone_number"
                 android:inputType="phone"
                 android:padding="8dp"
+                android:text="@={vm.phone}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_value"
@@ -116,6 +130,7 @@
                 android:hint="@string/description"
                 android:inputType="textPersonName"
                 android:padding="8dp"
+                android:text="@={vm.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_phone" />

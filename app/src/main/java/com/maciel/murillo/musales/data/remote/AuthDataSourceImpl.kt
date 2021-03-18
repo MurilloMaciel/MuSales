@@ -10,7 +10,7 @@ class AuthDataSourceImpl(
     private val auth: FirebaseAuth
 ) : AuthDataSource {
 
-    override suspend fun isUserLogged() = auth.currentUser != null
+    override fun isUserLogged() = auth.currentUser != null
 
     override suspend fun logout() = auth.signOut()
 

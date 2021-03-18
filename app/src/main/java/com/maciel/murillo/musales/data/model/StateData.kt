@@ -4,6 +4,7 @@ import com.maciel.murillo.musales.domain.model.State
 
 enum class StateData {
 
+    ALL,
     AC,
     AL,
     AM,
@@ -34,6 +35,7 @@ enum class StateData {
 }
 
 fun State.mapToStateData() = when (this) {
+    State.ALL -> StateData.ALL
     State.AC -> StateData.AC
     State.AL -> StateData.AL
     State.AM -> StateData.AM

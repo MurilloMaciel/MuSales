@@ -8,6 +8,22 @@
     <string name="menu_login">Login</string>
     <string name="menu_logout">Logout</string>
 
+    <string name="auth_error_password_empty">Password cannot be empty</string>
+    <string name="auth_error_name_empty">Name cannot be empty</string>
+    <string name="auth_error_email_empty">E-mail cannot be empty</string>
+    <string name="auth_error_invalid_email">Need a valid e-mail</string>
+    <string name="auth_error_strongest_password">Use a strongest password</string>
+    <string name="auth_error_valid_email">Need a valid e-mail</string>
+    <string name="auth_error_account_already_exists">Account already exists</string>
+    <string name="auth_error_info_doesnt_exists">E-mail doesn\'t match any registered user</string>
+    <string name="auth_error_user_not_exists">Unregistered user</string>
+    <string name="auth_error_generic">An error occurred, try again</string>
+
+    <string name="data_error_standard_read_error">Ocorreu um erro ao recuperar anúncios</string>
+    <string name="data_error_standard_save_error">Ocorreu um erro ao salvar o anúncio</string>
+    <string name="data_error_standard_delete_error">Ocorreu um erro ao remover o anúncio</string>
+    <string name="data_error_standard_update_error">Ocorreu um erro ao atualizar o anúncio</string>
+
     <string name="locale">REGIÃO</string>
     <string name="category">CATEGORIA</string>
     <string name="title">Título</string>
@@ -20,19 +36,17 @@
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
     <string name="show_phone_number">VER TELEFONE</string>
+    <string name="all_ads_empty">Não existem anúncios disponíveis</string>
+    <string name="loading_ads">Carregando anuncios</string>
+    <string name="my_ads_title">Meus anúncios</string>
+    <string name="cancel">Cancelar</string>
+    <string name="to_filter">Filtrar</string>
+    <string name="select_state">Selecione o estado</string>
+    <string name="select_category">Selecione a categoria</string>
+    <string name="form_invalid">Preencha todos os campos do formulário</string>
+    <string name="cloud_error">Ocorreu um erro ao comunicar com o servidor</string>
 
-    <string name="auth_error_password_empty">Password cannot be empty</string>
-    <string name="auth_error_name_empty">Name cannot be empty</string>
-    <string name="auth_error_email_empty">E-mail cannot be empty</string>
-    <string name="auth_error_invalid_email">Need a valid e-mail</string>
-    <string name="auth_error_strongest_password">Use a strongest password</string>
-    <string name="auth_error_valid_email">Need a valid e-mail</string>
-    <string name="auth_error_account_already_exists">Account already exists</string>
-    <string name="auth_error_info_doesnt_exists">E-mail doesn\'t match any registered user</string>
-    <string name="auth_error_user_not_exists">Unregistered user</string>
-    <string name="auth_error_generic">An error occurred, try again</string>
-
-    <string-array name="estados">
+    <string-array name="states">
         <item>AC</item>
         <item>AL</item>
         <item>AM</item>
@@ -62,7 +76,7 @@
         <item>TO</item>
     </string-array>
 
-    <string-array name="categorias">
+    <string-array name="categories">
         <item>Automóveis</item>
         <item>Imóveis</item>
         <item>Eletrônicos</item>

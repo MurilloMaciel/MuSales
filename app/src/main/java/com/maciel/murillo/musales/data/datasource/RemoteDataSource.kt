@@ -12,11 +12,13 @@ interface RemoteDataSource {
 
     suspend fun getAdsFiltered(state: StateData, category: CategoryData): List<AdData>
 
-    suspend fun getMyAds(): List<AdData>
+    suspend fun getMyAds(userUid: String): List<AdData>
 
     suspend fun getAd(id: String): AdData
 
     suspend fun deleteAd(ad: AdData)
 
     suspend fun updateAd(ad: AdData)
+
+    suspend fun saveImage()
 }

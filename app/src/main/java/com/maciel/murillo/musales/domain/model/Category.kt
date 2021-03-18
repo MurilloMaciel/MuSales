@@ -2,6 +2,7 @@ package com.maciel.murillo.musales.domain.model
 
 enum class Category {
 
+    ALL,
     CARS,
     PROPERTIES,
     ELECTRONICS,

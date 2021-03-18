@@ -21,7 +21,7 @@ class RepositoryImpl(
 
     override suspend fun deleteUserUid() = localDataSource.deleteUserUid()
 
-    override suspend fun isUserLogged() = authDataSource.isUserLogged()
+    override fun isUserLogged() = authDataSource.isUserLogged()
 
     override suspend fun signup(email: String, password: String) = authDataSource.signup(email, password)
 
@@ -34,7 +34,7 @@ class RepositoryImpl(
     override suspend fun getAdsFiltered(state: State, category: Category) =
         remoteDataSource.getAdsFiltered(state.mapToStateData(), category.mapToCategoryData()).map { it.mapToAd() }
 
-    override suspend fun getMyAds() = remoteDataSource.getMyAds().map { it.mapToAd() }
+    override suspend fun getMyAds(userUid: String) = remoteDataSource.getMyAds(userUid).map { it.mapToAd() }
 
     override suspend fun getAllAds() = remoteDataSource.getAllAds().map { it.mapToAd() }
 
@@ -43,4 +43,6 @@ class RepositoryImpl(
     override suspend fun deleteAd(ad: Ad) = remoteDataSource.deleteAd(ad.mapToAdData())
 
     override suspend fun updateAd(ad: Ad) = remoteDataSource.updateAd(ad.mapToAdData())
+
+    override suspend fun saveImage() = remoteDataSource.saveImage()
 }

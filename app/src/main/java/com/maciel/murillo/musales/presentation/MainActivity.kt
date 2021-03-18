@@ -16,7 +16,5 @@ class MainActivity : AppCompatActivity() {
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.vm = mainViewModel
-
-        setSupportActionBar(findViewById(R.id.toolbar))
     }
 }

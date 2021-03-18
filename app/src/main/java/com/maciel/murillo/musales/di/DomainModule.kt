@@ -5,6 +5,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
 
+    factory { SaveImageUseCase(repository = get()) }
     factory { DeleteAdUseCase(repository = get()) }
     factory { GetAdUseCase(repository = get()) }
     factory { GetAllAdsUseCase(repository = get()) }

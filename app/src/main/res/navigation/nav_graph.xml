@@ -11,12 +11,6 @@
         tools:layout="@layout/fragment_splash">
 
         <action
-            android:id="@+id/goToAuthFrag"
-            app:destination="@id/fragAuth"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
-
-        <action
             android:id="@+id/goToAdsFrag"
             app:destination="@id/fragAds"
             app:popUpTo="@id/nav_graph"
@@ -48,6 +42,42 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
 
+        <action
+            android:id="@+id/goToAdDetailsFrag"
+            app:destination="@id/fragAdDetails" />
+
+        <action
+            android:id="@+id/goToMyAdsFrag"
+            app:destination="@id/fragMyAds" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/fragMyAds"
+        android:name="com.maciel.murillo.musales.presentation.my_ads.MyAdsFragment"
+        tools:layout="@layout/fragment_my_ads">
+
+        <action
+            android:id="@+id/goToRegisterAdFrag"
+            app:destination="@id/fragRegisterAd" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragAdDetails"
+        android:name="com.maciel.murillo.musales.presentation.ad_details.AdDetailFragment"
+        tools:layout="@layout/fragment_ad_details">
+
+        <argument
+            android:name="ad"
+            app:argType="com.maciel.murillo.musales.domain.model.Ad"
+            app:nullable="false" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragRegisterAd"
+        android:name="com.maciel.murillo.musales.presentation.register_ad.RegisterAdFragment"
+        tools:layout="@layout/fragment_register_ad" />
 
 </navigation>

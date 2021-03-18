@@ -4,6 +4,7 @@ import com.maciel.murillo.musales.domain.model.Category
 
 enum class CategoryData {
 
+    ALL,
     CARS,
     PROPERTIES,
     ELECTRONICS,
@@ -15,6 +16,7 @@ enum class CategoryData {
 }
 
 fun Category.mapToCategoryData() = when (this) {
+    Category.ALL -> CategoryData.ALL
     Category.CARS -> CategoryData.CARS
     Category.PROPERTIES -> CategoryData.PROPERTIES
     Category.ELECTRONICS -> CategoryData.ELECTRONICS

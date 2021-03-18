@@ -14,7 +14,7 @@ interface Repository {
 
     suspend fun deleteUserUid()
 
-    suspend fun isUserLogged(): Boolean
+    fun isUserLogged(): Boolean
 
     suspend fun signup(email: String, password: String): FirebaseUser?
 
@@ -28,11 +28,13 @@ interface Repository {
 
     suspend fun getAdsFiltered(state: State, category: Category): List<Ad>
 
-    suspend fun getMyAds(): List<Ad>
+    suspend fun getMyAds(userUid: String): List<Ad>
 
     suspend fun getAd(id: String): Ad
 
     suspend fun deleteAd(ad: Ad)
 
     suspend fun updateAd(ad: Ad)
+
+    suspend fun saveImage()
 }

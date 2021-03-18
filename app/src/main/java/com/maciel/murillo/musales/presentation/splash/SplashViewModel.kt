@@ -10,26 +10,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val SPLASH_TIME = 2000L
+const val SPLASH_TIME = 2500L
 
-class SplashViewModel(
-    private val isUserLoggedUseCase: IsUserLoggedUseCase,
-) : ViewModel() {
-
-    private val _navigateToAuth = MutableLiveData<Event<Unit>>()
-    val navigateToAuth: LiveData<Event<Unit>> = _navigateToAuth
+class SplashViewModel : ViewModel() {
 
     private val _navigateToAds = MutableLiveData<Event<Unit>>()
     val navigateToAds: LiveData<Event<Unit>> = _navigateToAds
 
-    fun checkUserAndRedirect() {
+    fun waitSplashAndRedirect() {
         viewModelScope.launch(Dispatchers.Default) {
             delay(SPLASH_TIME)
-            if (isUserLoggedUseCase()) {
-                _navigateToAds.postValue(Event(Unit))
-            } else {
-                _navigateToAuth.postValue(Event(Unit))
-            }
+            _navigateToAds.postValue(Event(Unit))
         }
     }
 }

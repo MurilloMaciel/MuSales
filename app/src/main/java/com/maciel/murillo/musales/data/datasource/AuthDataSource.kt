@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseUser
 
 interface AuthDataSource {
 
-    suspend fun isUserLogged(): Boolean
+    fun isUserLogged(): Boolean
 
     suspend fun signup(email: String, password: String): FirebaseUser?
 

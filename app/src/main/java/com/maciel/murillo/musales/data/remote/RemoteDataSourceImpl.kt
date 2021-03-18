@@ -1,5 +1,6 @@
 package com.maciel.murillo.musales.data.remote
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.maciel.murillo.musales.data.datasource.RemoteDataSource
@@ -9,7 +10,9 @@ import com.maciel.murillo.musales.data.model.StateData
 import kotlinx.coroutines.tasks.await
 
 const val DOCUMENT_ADS = "Ads"
-const val DOCUMENT_MY_ADS = "My_Ads"
+const val PROPERTY_USER_UID = "userUid"
+const val PROPERTY_STATE = "state"
+const val PROPERTY_CATEGORY = "category"
 
 class RemoteDataSourceImpl(private val db: FirebaseFirestore) : RemoteDataSource {
 
@@ -21,11 +24,30 @@ class RemoteDataSourceImpl(private val db: FirebaseFirestore) : RemoteDataSource
 
     override suspend fun getAdsFiltered(state: StateData, category: CategoryData): List<AdData> {
         val ads = mutableListOf<AdData>()
+        val snapshot = when {
+            state == StateData.ALL -> getAdsFilteredByCategory(category)
+            category == CategoryData.ALL -> getAdsFilteredByState(state)
+            else -> getAdsFilteredByStateAndCategory(state, category)
+        }
+        snapshot.documents.forEach { document ->
+            document.toObject<AdData>()?.run {
+                ads.add(this).apply { id = document.id }
+            }
+        }
         return ads
     }
 
-    override suspend fun getMyAds(): List<AdData> {
+    override suspend fun getMyAds(userUid: String): List<AdData> {
+        val snapshot = db.collection(DOCUMENT_ADS)
+            .whereEqualTo(PROPERTY_USER_UID, userUid)
+            .get()
+            .await()
         val ads = mutableListOf<AdData>()
+        snapshot.documents.forEach { document ->
+            document.toObject<AdData>()?.run {
+                ads.add(this).apply { id = document.id }
+            }
+        }
         return ads
     }
 
@@ -56,6 +78,10 @@ class RemoteDataSourceImpl(private val db: FirebaseFirestore) : RemoteDataSource
             .await()
     }
 
+    override suspend fun saveImage() {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getAd(id: String): AdData {
         val snapshot = db.collection(DOCUMENT_ADS)
             .document(id)
@@ -63,4 +89,20 @@ class RemoteDataSourceImpl(private val db: FirebaseFirestore) : RemoteDataSource
             .await()
         return snapshot.toObject<AdData>() ?: throw Exception()
     }
+
+    private suspend fun getAdsFilteredByStateAndCategory(state: StateData, category: CategoryData) = db.collection(DOCUMENT_ADS)
+        .whereEqualTo(PROPERTY_STATE, state.name)
+        .whereEqualTo(PROPERTY_CATEGORY, category.name)
+        .get()
+        .await()
+
+    private suspend fun getAdsFilteredByState(state: StateData) = db.collection(DOCUMENT_ADS)
+        .whereEqualTo(PROPERTY_STATE, state.name)
+        .get()
+        .await()
+
+    private suspend fun getAdsFilteredByCategory(category: CategoryData) = db.collection(DOCUMENT_ADS)
+        .whereEqualTo(PROPERTY_CATEGORY, category.name)
+        .get()
+        .await()
 }

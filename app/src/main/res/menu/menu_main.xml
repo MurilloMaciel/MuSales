@@ -8,7 +8,7 @@
 
         <item
             android:id="@+id/menu_ads"
-            android:title="@string/menu_my_ads" />
+            android:title="@string/menu_my_ads"/>
         <item
             android:id="@+id/menu_logout"
             android:title="@string/menu_logout" />
