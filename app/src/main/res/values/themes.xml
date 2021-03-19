@@ -27,4 +27,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="App.ToolbarTitleText" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="App.ToolbarStyle" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
 </resources>

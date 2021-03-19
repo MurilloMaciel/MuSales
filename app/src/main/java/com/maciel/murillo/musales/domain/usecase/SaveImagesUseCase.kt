@@ -1,5 +1,6 @@
 package com.maciel.murillo.musales.domain.usecase
 
+import com.maciel.murillo.musales.core.extensions.log
 import com.maciel.murillo.musales.domain.repository.Repository
 
 class SaveImagesUseCase(private val repository: Repository) {

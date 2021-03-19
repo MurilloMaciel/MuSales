@@ -10,10 +10,11 @@
             type="com.maciel.murillo.musales.presentation.my_ads.MyAdsViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:background="@color/gray_light">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -35,75 +36,71 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ads"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            app:data="@{vm.myAds}"
+            app:is_visible="@{vm.myAdsVisibility}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            tools:itemCount="3"
+            tools:listitem="@layout/view_ad" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_ads"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="8dp"
-                android:orientation="vertical"
-                app:data="@{vm.myAds}"
-                app:is_visible="@{vm.myAdsVisibility}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="3"
-                tools:listitem="@layout/view_ad" />
+        <include
+            android:id="@+id/ads_empty"
+            layout="@layout/view_ads_empty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:is_visible="@{vm.myAdsEmptyVisibility}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
 
-            <include
-                android:id="@+id/ads_empty"
-                layout="@layout/view_ads_empty"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:is_visible="@{vm.myAdsEmptyVisibility}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone" />
+        <include
+            android:id="@+id/loading"
+            layout="@layout/view_loading"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:is_visible="@{vm.loadingVisibility}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
 
-            <include
-                android:id="@+id/loading"
-                layout="@layout/view_loading"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:is_visible="@{vm.loadingVisibility}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone" />
-
-            <include
-                android:id="@+id/error"
-                layout="@layout/view_error"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:is_visible="@{vm.errorVisibility}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/error"
+            layout="@layout/view_error"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:is_visible="@{vm.errorVisibility}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:foregroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:onClick="@{() -> vm.onClickToAdd()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add_24" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

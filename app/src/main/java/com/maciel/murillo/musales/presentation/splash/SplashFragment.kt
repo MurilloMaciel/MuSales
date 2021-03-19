@@ -23,8 +23,6 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("Murillo", "")
-
         splashViewModel.waitSplashAndRedirect()
 
         splashViewModel.navigateToAds.observe(viewLifecycleOwner, EventObserver {

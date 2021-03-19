@@ -23,6 +23,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.maciel.murillo.musales.R
+import com.maciel.murillo.musales.core.extensions.log
 import com.maciel.murillo.musales.core.helper.EventObserver
 import com.maciel.murillo.musales.databinding.FragmentRegisterAdBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -92,7 +93,7 @@ class RegisterAdFragment : Fragment() {
 
         imageSelection.observe(viewLifecycleOwner, EventObserver { imagePosition ->
             imagePositionInEdition = imagePosition
-            handleImageSelection(imagePosition)
+            handleImageSelection()
         })
 
         prepareImages.observe(viewLifecycleOwner, EventObserver {
@@ -105,14 +106,15 @@ class RegisterAdFragment : Fragment() {
         images.forEach { image ->
             if (image.isNotBlank()) {
                 val bitmap = if (SDK_INT < P) {
-                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, images[0].toUri())
+                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image.toUri())
                 } else {
-                    val source = ImageDecoder.createSource(requireActivity().contentResolver, images[0].toUri())
+                    val source = ImageDecoder.createSource(requireActivity().contentResolver, image.toUri())
                     ImageDecoder.decodeBitmap(source)
                 }
-                val baos = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
-                bitmaps.add(baos.toByteArray())
+                ByteArrayOutputStream().apply {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, this)
+                    bitmaps.add(this.toByteArray())
+                }
             }
         }
         registerAdViewModel.onPrepareImages(bitmaps)
@@ -124,7 +126,11 @@ class RegisterAdFragment : Fragment() {
         } else if (requestCode == REQUEST_CODE_GALLERY) {
 //            registerAdViewModel.onSelectImageFromGallery(uri.toString())
             images[imagePositionInEdition] = uri.toString()
-            binding.ivAdImage1.setImageURI(uri)
+            when (imagePositionInEdition) {
+                0 -> binding.ivAdImage1.setImageURI(uri)
+                1 -> binding.ivAdImage2.setImageURI(uri)
+                2 -> binding.ivAdImage3.setImageURI(uri)
+            }
         }
     }
 
@@ -144,11 +150,11 @@ class RegisterAdFragment : Fragment() {
         if (success) {
             navController.popBackStack()
         } else {
-
+            Toast.makeText(context, R.string.data_error_standard_save_error, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun handleImageSelection(imagePosition: Int) {
+    private fun handleImageSelection() {
         PickPhotoDialog.show(
             manager = childFragmentManager,
             onClickPickFromCamera = ::getImageFromCamera,
