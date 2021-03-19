@@ -24,6 +24,8 @@
     <string name="data_error_standard_delete_error">Ocorreu um erro ao remover o anúncio</string>
     <string name="data_error_standard_update_error">Ocorreu um erro ao atualizar o anúncio</string>
 
+    <string name="read_user_uid_standard_error">Ocorreu um erro recuperar seu id de usuário</string>
+
     <string name="locale">REGIÃO</string>
     <string name="category">CATEGORIA</string>
     <string name="title">Título</string>
@@ -39,12 +41,16 @@
     <string name="all_ads_empty">Não existem anúncios disponíveis</string>
     <string name="loading_ads">Carregando anuncios</string>
     <string name="my_ads_title">Meus anúncios</string>
+    <string name="my_register_ad_title">Novo anúncio</string>
     <string name="cancel">Cancelar</string>
     <string name="to_filter">Filtrar</string>
     <string name="select_state">Selecione o estado</string>
     <string name="select_category">Selecione a categoria</string>
     <string name="form_invalid">Preencha todos os campos do formulário</string>
     <string name="cloud_error">Ocorreu um erro ao comunicar com o servidor</string>
+    <string name="take_a_picture">Tirar uma foto</string>
+    <string name="select_from_gallery">Selecionar da galeria</string>
+    <string name="how_to_select_image">Como deseja selecionar a foto</string>
 
     <string-array name="states">
         <item>AC</item>

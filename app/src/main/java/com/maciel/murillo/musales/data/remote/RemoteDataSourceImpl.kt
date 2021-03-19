@@ -1,8 +1,8 @@
 package com.maciel.murillo.musales.data.remote
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.storage.StorageReference
 import com.maciel.murillo.musales.data.datasource.RemoteDataSource
 import com.maciel.murillo.musales.data.model.AdData
 import com.maciel.murillo.musales.data.model.CategoryData
@@ -13,12 +13,19 @@ const val DOCUMENT_ADS = "Ads"
 const val PROPERTY_USER_UID = "userUid"
 const val PROPERTY_STATE = "state"
 const val PROPERTY_CATEGORY = "category"
+const val STORAGE_NODE_IMAGES = "images"
+const val STORAGE_NODE_ADS = "ads"
+const val STORAGE_PREFIX_IMAGE = "image"
 
-class RemoteDataSourceImpl(private val db: FirebaseFirestore) : RemoteDataSource {
+class RemoteDataSourceImpl(
+    private val storage: StorageReference,
+    private val db: FirebaseFirestore
+) : RemoteDataSource {
 
-    override suspend fun registerAd(ad: AdData) {
+    override suspend fun registerAd(ad: AdData): AdData {
         db.collection(DOCUMENT_ADS).document().let { document ->
             document.set(ad.apply { id = document.id }).await()
+            return ad
         }
     }
 
@@ -78,8 +85,18 @@ class RemoteDataSourceImpl(private val db: FirebaseFirestore) : RemoteDataSource
             .await()
     }
 
-    override suspend fun saveImage() {
-        TODO("Not yet implemented")
+    override suspend fun saveImage(adId: String, position: Int, imageBytes: ByteArray): String {
+        val uploadTask = storage.child(STORAGE_NODE_IMAGES)
+            .child(STORAGE_NODE_ADS)
+            .child(adId)
+            .child(STORAGE_PREFIX_IMAGE + position)
+            .putBytes(imageBytes)
+            .await()
+        return uploadTask
+            .storage
+            .downloadUrl
+            .await()
+            .toString()
     }
 
     override suspend fun getAd(id: String): AdData {

@@ -22,7 +22,7 @@ interface Repository {
 
     suspend fun logout()
 
-    suspend fun registerAd(ad: Ad)
+    suspend fun registerAd(ad: Ad): Ad
 
     suspend fun getAllAds(): List<Ad>
 
@@ -36,5 +36,5 @@ interface Repository {
 
     suspend fun updateAd(ad: Ad)
 
-    suspend fun saveImage()
+    suspend fun saveImage(adId: String, position: Int, imageBytes: ByteArray): String
 }

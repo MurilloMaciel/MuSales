@@ -1,72 +1,88 @@
 package com.maciel.murillo.musales.presentation.my_ads
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.maciel.murillo.musales.core.helper.Event
+import com.maciel.murillo.musales.data.model.GetAdsStatus
 import com.maciel.murillo.musales.domain.model.Ad
 import com.maciel.murillo.musales.domain.usecase.GetMyAdsUseCase
 import com.maciel.murillo.musales.domain.usecase.ReadUserIdUseCase
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class MyAdsViewModel(
     private val getMyAdsUseCase: GetMyAdsUseCase,
     private val readUserIdUseCase: ReadUserIdUseCase
 ) : ViewModel() {
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        _getMyAdsError.postValue(Event(Unit))
+    lateinit var userUid: String
+
+    private val exceptionHandlerReadUserUid = CoroutineExceptionHandler { _, _ ->
+        _readUserUidError.postValue(Event(Unit))
+    }
+
+    private val exceptionHandlerReadMyAds = CoroutineExceptionHandler { _, _ ->
+        setConnectionError()
     }
 
     val myAds = MutableLiveData<List<Ad>>().apply { value = emptyList() }
 
-    private val _getMyAdsError = MutableLiveData<Event<Unit>>()
-    val getMyAdsError: LiveData<Event<Unit>> = _getMyAdsError
+    private val _readUserUidError = MutableLiveData<Event<Unit>>()
+    val readUserUidError: LiveData<Event<Unit>> = _readUserUidError
 
     private val _navigateToRegisterAd = MutableLiveData<Event<Unit>>()
     val navigateToRegisterAd: LiveData<Event<Unit>> = _navigateToRegisterAd
 
-    private val _loadingMyAds = MutableLiveData<Boolean>().apply { value = true }
-    val loadingMyAds: LiveData<Boolean> = _loadingMyAds
+    private val _navigateToAdDetails = MutableLiveData<Event<Ad>>()
+    val navigateToAdDetails: LiveData<Event<Ad>> = _navigateToAdDetails
 
-    private val myAdsEmpty: LiveData<Boolean> = Transformations.map(myAds) { myAds ->
-        myAds.isNullOrEmpty()
+    private val _getAdsStatus = MutableLiveData<GetAdsStatus>()
+
+    val myAdsVisibility: LiveData<Boolean> = Transformations.map(_getAdsStatus) { status ->
+        myAds.value.isNullOrEmpty().not().and(status == GetAdsStatus.SUCCESS)
     }
 
-    val myAdsVisibility = MediatorLiveData<Boolean>().apply {
-        addSource(myAdsEmpty) {
-            value = it.not()
-        }
-        addSource(_loadingMyAds) {
-            value = it.not()
-        }
+    val myAdsEmptyVisibility: LiveData<Boolean> = Transformations.map(_getAdsStatus) { status ->
+        myAds.value.isNullOrEmpty().and(status == GetAdsStatus.SUCCESS)
     }
 
-    val myAdsEmptyVisibility = MediatorLiveData<Boolean>().apply {
-        addSource(myAdsEmpty) {
-            value = it
-        }
-        addSource(_loadingMyAds) {
-            value = it.not()
+    val loadingVisibility: LiveData<Boolean> = Transformations.map(_getAdsStatus) { status ->
+        status == GetAdsStatus.LOADING
+    }
+
+    val errorVisibility: LiveData<Boolean> = Transformations.map(_getAdsStatus) { status ->
+        status == GetAdsStatus.ERROR
+    }
+
+    private fun setLoading() = _getAdsStatus.postValue(GetAdsStatus.LOADING)
+
+    private fun setRequestSuccess() = _getAdsStatus.postValue(GetAdsStatus.SUCCESS)
+
+    private fun setConnectionError() = _getAdsStatus.postValue(GetAdsStatus.ERROR)
+
+    private suspend fun readUserUid() {
+        withContext(Dispatchers.Default + exceptionHandlerReadUserUid) {
+            userUid = readUserIdUseCase().first()
         }
     }
 
     private fun getMyAds() {
-        viewModelScope.launch(Dispatchers.Default) {
-            _loadingMyAds.postValue(true)
-            Log.d("Murillo", "user uid -> ${readUserIdUseCase().first()}")
-            myAds.postValue(getMyAdsUseCase(readUserIdUseCase().first()))
-            _loadingMyAds.postValue(false)
+        viewModelScope.launch(Dispatchers.Default + exceptionHandlerReadMyAds) {
+            readUserUid()
+            setLoading()
+            myAds.postValue(getMyAdsUseCase(userUid))
+            setRequestSuccess()
         }
     }
 
-    fun onClickAdd() {
+    fun onClickToAdd() {
         _navigateToRegisterAd.postValue(Event(Unit))
     }
 
     fun onResumeScreen() {
-//        getMyAds()
+        getMyAds()
+    }
+
+    fun onClickAd(position: Int) {
+        _navigateToAdDetails.postValue(Event(myAds.value?.get(position) ?: Ad()))
     }
 }

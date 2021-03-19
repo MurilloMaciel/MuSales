@@ -1,6 +1,5 @@
 package com.maciel.murillo.musales.presentation.ads
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.maciel.murillo.musales.core.extensions.toCategory
 import com.maciel.murillo.musales.core.extensions.toState
@@ -98,7 +97,6 @@ class AdsViewModel(
             setRequestSuccess()
         }
     }
-
 
     fun onResumeScreen() {
         val isUserLogged = isUserLogged()

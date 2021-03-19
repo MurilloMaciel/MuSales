@@ -37,15 +37,6 @@ fun Query.snapshotAsFlow() = callbackFlow<QuerySnapshot> {
     }
 }
 
-//suspend inline fun <reified T : Any> Task<T>.await(): T {
-//
-//    return suspendCancellableCoroutine { continuation ->
-//        addOnSuccessListener { continuation.resume(it) }
-//        addOnFailureListener { continuation.resumeWithException(it) }
-//        addOnCanceledListener { continuation.cancel() }
-//    }
-//}
-
 @ExperimentalCoroutinesApi
 fun DocumentReference.snapshotAsFlow() = callbackFlow<DocumentSnapshot> {
 

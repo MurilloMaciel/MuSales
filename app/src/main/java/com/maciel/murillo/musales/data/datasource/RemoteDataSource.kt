@@ -6,7 +6,7 @@ import com.maciel.murillo.musales.data.model.StateData
 
 interface RemoteDataSource {
 
-    suspend fun registerAd(ad: AdData)
+    suspend fun registerAd(ad: AdData): AdData
 
     suspend fun getAllAds(): List<AdData>
 
@@ -20,5 +20,7 @@ interface RemoteDataSource {
 
     suspend fun updateAd(ad: AdData)
 
-    suspend fun saveImage()
+    suspend fun saveImage(adId: String, position: Int, imageBytes: ByteArray): String
+
+//    suspend fun prepareImage(imagePath: String): ByteArray
 }

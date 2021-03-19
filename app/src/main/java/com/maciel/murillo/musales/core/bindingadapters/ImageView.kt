@@ -2,6 +2,8 @@ package com.maciel.murillo.musales.core.bindingadapters
 
 import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -14,6 +16,19 @@ fun imageUrl(view: ImageView, url: String?) {
         .transition(DrawableTransitionOptions.withCrossFade())
         .error(R.drawable.standard)
         .into(view)
+}
+
+@BindingAdapter("app:imagePath")
+fun imagePath(imageView: ImageView, path: String?) {
+    if (path.isNullOrBlank()) {
+        imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.standard))
+    } else {
+        return try {
+            imageView.setImageURI(path.toUri())
+        } catch (e: Throwable) {
+            imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.standard))
+        }
+    }
 }
 
 @BindingAdapter("app:imageDrawableId")

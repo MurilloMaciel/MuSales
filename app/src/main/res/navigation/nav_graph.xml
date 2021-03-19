@@ -61,6 +61,10 @@
             android:id="@+id/goToRegisterAdFrag"
             app:destination="@id/fragRegisterAd" />
 
+        <action
+            android:id="@+id/goToAdDetailsFrag"
+            app:destination="@id/fragAdDetails" />
+
     </fragment>
 
     <fragment

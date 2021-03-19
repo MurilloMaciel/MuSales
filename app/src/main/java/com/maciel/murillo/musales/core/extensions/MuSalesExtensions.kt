@@ -1,9 +1,8 @@
 package com.maciel.murillo.musales.core.extensions
 
+import android.util.Log
 import com.maciel.murillo.musales.domain.model.Category
 import com.maciel.murillo.musales.domain.model.State
-
-//fun State.toStringArray
 
 fun String.toState(): State {
     for (state in State.values()) {
@@ -23,10 +22,6 @@ fun String.toCategory(): Category {
     return Category.ALL
 }
 
-//fun String.toState() = when (this) {
-//    else -> State.ALL
-//}
-
-//fun String.toCategory() = when (this) {
-//    else -> Category.ALL
-//}
+fun String?.log(tag: String = "Murillo") {
+    Log.d(tag, this.safe())
+}

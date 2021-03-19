@@ -28,7 +28,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="@color/colorPrimary"
+                app:navigationIcon="@drawable/ic_arrow_back_white_24"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="@string/my_ads_title" />
 
@@ -45,12 +46,15 @@
                 android:layout_height="0dp"
                 android:layout_margin="8dp"
                 android:orientation="vertical"
+                app:data="@{vm.myAds}"
                 app:is_visible="@{vm.myAdsVisibility}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="3"
+                tools:listitem="@layout/view_ad" />
 
             <include
                 android:id="@+id/ads_empty"
@@ -69,7 +73,19 @@
                 layout="@layout/view_loading"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:is_visible="@{vm.loadingMyAds}"
+                app:is_visible="@{vm.loadingVisibility}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
+
+            <include
+                android:id="@+id/error"
+                layout="@layout/view_error"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:is_visible="@{vm.errorVisibility}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +101,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:foregroundTint="@color/colorPrimary"
-            android:onClick="@{() -> vm.onClickAdd()}"
+            android:onClick="@{() -> vm.onClickToAdd()}"
             app:srcCompat="@drawable/ic_add_24" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

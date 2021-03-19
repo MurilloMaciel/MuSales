@@ -29,7 +29,7 @@ class RepositoryImpl(
 
     override suspend fun logout() = authDataSource.logout()
 
-    override suspend fun registerAd(ad: Ad) = remoteDataSource.registerAd(ad.mapToAdData())
+    override suspend fun registerAd(ad: Ad) = remoteDataSource.registerAd(ad.mapToAdData()).mapToAd()
 
     override suspend fun getAdsFiltered(state: State, category: Category) =
         remoteDataSource.getAdsFiltered(state.mapToStateData(), category.mapToCategoryData()).map { it.mapToAd() }
@@ -44,5 +44,5 @@ class RepositoryImpl(
 
     override suspend fun updateAd(ad: Ad) = remoteDataSource.updateAd(ad.mapToAdData())
 
-    override suspend fun saveImage() = remoteDataSource.saveImage()
+    override suspend fun saveImage(adId: String, position: Int, imageBytes: ByteArray) = remoteDataSource.saveImage(adId, position, imageBytes)
 }

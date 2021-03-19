@@ -1,6 +1,5 @@
 package com.maciel.murillo.musales.di
 
-import com.maciel.murillo.musales.presentation.MainViewModel
 import com.maciel.murillo.musales.presentation.ad_details.AdDetailViewModel
 import com.maciel.murillo.musales.presentation.ads.AdsViewModel
 import com.maciel.murillo.musales.presentation.auth.AuthViewModel
@@ -11,10 +10,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val presentationModule = module {
-
-    viewModel {
-        MainViewModel()
-    }
 
     viewModel {
         SplashViewModel()
@@ -47,7 +42,8 @@ val presentationModule = module {
         RegisterAdViewModel(
             getUserIdUseCase = get(),
             registerAdUseCase = get(),
-            saveImageUseCase = get(),
+            saveImagesUseCase = get(),
+            updateAdUseCase = get(),
         )
     }
 

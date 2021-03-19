@@ -26,7 +26,7 @@ class LocalDataSourceImpl(
 
     override suspend fun readUserUid(): Flow<String> {
         return dataStore.data.catch { exception ->
-            if (exception is IOException) { // 2
+            if (exception is IOException) {
                 emit(emptyPreferences())
             } else {
                 throw exception
