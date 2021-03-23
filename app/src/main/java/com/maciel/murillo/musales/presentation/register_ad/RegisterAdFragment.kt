@@ -8,22 +8,17 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.M
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat.checkSelfPermission
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.maciel.murillo.musales.R
-import com.maciel.murillo.musales.core.extensions.log
 import com.maciel.murillo.musales.core.helper.EventObserver
 import com.maciel.murillo.musales.databinding.FragmentRegisterAdBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,7 +38,6 @@ class RegisterAdFragment : Fragment() {
     private var _binding: FragmentRegisterAdBinding? = null
     private val binding get() = _binding!!
 
-    private val images = mutableListOf<String>("", "", "")
     private var imagePositionInEdition = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,7 +58,7 @@ class RegisterAdFragment : Fragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_CODE_CAMERA_PERMISSION) {
-
+            getImageFromCamera()
         }
     }
 
@@ -72,8 +66,8 @@ class RegisterAdFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
-            data?.data?.let { uri ->
-                handleAdImageResult(requestCode, uri)
+            data?.run {
+                handleAdImageResult(requestCode, this)
             }
         }
     }
@@ -95,54 +89,59 @@ class RegisterAdFragment : Fragment() {
             imagePositionInEdition = imagePosition
             handleImageSelection()
         })
-
-        prepareImages.observe(viewLifecycleOwner, EventObserver {
-            prepareImages()
-        })
     }
 
-    private fun prepareImages() {
-        val bitmaps = mutableListOf<ByteArray>()
-        images.forEach { image ->
-            if (image.isNotBlank()) {
-                val bitmap = if (SDK_INT < P) {
-                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image.toUri())
-                } else {
-                    val source = ImageDecoder.createSource(requireActivity().contentResolver, image.toUri())
-                    ImageDecoder.decodeBitmap(source)
-                }
-                ByteArrayOutputStream().apply {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, this)
-                    bitmaps.add(this.toByteArray())
-                }
-            }
-        }
-        registerAdViewModel.onPrepareImages(bitmaps)
-    }
-
-    private fun handleAdImageResult(requestCode: Int, uri: Uri) {
+    private fun handleAdImageResult(requestCode: Int, data: Intent) {
         if (requestCode == REQUEST_CODE_CAMERA) {
-            handleCameraImage()
+            data.extras?.get("data")?.takeIf { it is Bitmap }?.run {
+                handleCameraImage(this as Bitmap)
+            }
         } else if (requestCode == REQUEST_CODE_GALLERY) {
-//            registerAdViewModel.onSelectImageFromGallery(uri.toString())
-            images[imagePositionInEdition] = uri.toString()
-            when (imagePositionInEdition) {
-                0 -> binding.ivAdImage1.setImageURI(uri)
-                1 -> binding.ivAdImage2.setImageURI(uri)
-                2 -> binding.ivAdImage3.setImageURI(uri)
+            data.data?.run {
+                handleGalleryImage(this)
             }
         }
     }
 
-    private fun handleCameraImage() {
+    private fun handleCameraImage(bitmap: Bitmap) {
+        prepareImage(bitmap)
+        when (imagePositionInEdition) {
+            0 -> binding.ivAdImage1.setImageBitmap(bitmap)
+            1 -> binding.ivAdImage2.setImageBitmap(bitmap)
+            2 -> binding.ivAdImage3.setImageBitmap(bitmap)
+        }
+    }
 
+    private fun getBitmapFromUri(uri: Uri): Bitmap {
+        return if (SDK_INT < P) {
+            MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+        } else {
+            val source = ImageDecoder.createSource(requireActivity().contentResolver, uri)
+            ImageDecoder.decodeBitmap(source)
+        }
+    }
+
+    private fun handleGalleryImage(uri: Uri) {
+        prepareImage(getBitmapFromUri(uri))
+        when (imagePositionInEdition) {
+            0 -> binding.ivAdImage1.setImageURI(uri)
+            1 -> binding.ivAdImage2.setImageURI(uri)
+            2 -> binding.ivAdImage3.setImageURI(uri)
+        }
+    }
+
+    private fun prepareImage(bitmap: Bitmap) {
+        ByteArrayOutputStream().apply {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, this)
+            registerAdViewModel.onPrepareImage(this.toByteArray())
+        }
     }
 
     private fun checkCameraPermission() {
-        if (SDK_INT >= M && checkSelfPermission(requireContext(), CAMERA) != PERMISSION_GRANTED) {
+        if (checkSelfPermission(requireContext(), CAMERA) != PERMISSION_GRANTED) {
             requestPermissions(arrayOf(CAMERA), REQUEST_CODE_CAMERA_PERMISSION)
         } else {
-
+            getImageFromCamera()
         }
     }
 
@@ -157,13 +156,14 @@ class RegisterAdFragment : Fragment() {
     private fun handleImageSelection() {
         PickPhotoDialog.show(
             manager = childFragmentManager,
-            onClickPickFromCamera = ::getImageFromCamera,
+            onClickPickFromCamera = ::checkCameraPermission,
             onClickPickFromGallery = ::getImageFromGallery
         )
     }
 
     private fun getImageFromCamera() {
-
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_CODE_CAMERA)
     }
 
     private fun getImageFromGallery() {

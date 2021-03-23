@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-const val EMPTY_STRING = ""
+private const val EMPTY_STRING = ""
 
 class RegisterAdViewModel(
     private val getUserIdUseCase: ReadUserIdUseCase,
@@ -44,6 +44,9 @@ class RegisterAdViewModel(
     private val defaultContext = Dispatchers.Default + exceptionHandler
     private val saveImageContext = Dispatchers.IO + exceptionHandler
 
+    private var imagePositionInEdition = 0
+    private val imagesBytes = mutableListOf<ByteArray?>(null, null, null)
+
     var title = EMPTY_STRING
     var price = EMPTY_STRING
     var phone = EMPTY_STRING
@@ -56,12 +59,6 @@ class RegisterAdViewModel(
 
     val stateSelected = MutableLiveData<String>().apply { value = states[0] }
     val categorySelected = MutableLiveData<String>().apply { value = categories[0] }
-
-    private var imagePositionInEdition = 0
-//    val adImages = MutableLiveData<MutableList<String>>().apply { value = mutableListOf(EMPTY_STRING, EMPTY_STRING, EMPTY_STRING) }
-
-    private val _prepareImages = MutableLiveData<Event<Unit>>()
-    val prepareImages: LiveData<Event<Unit>> = _prepareImages
 
     private val _formInvalid = MutableLiveData<Event<Unit>>()
     val formInvalid: LiveData<Event<Unit>> = _formInvalid
@@ -92,7 +89,7 @@ class RegisterAdViewModel(
         return isFormValid
     }
 
-    private suspend fun readUserId(ad: Ad) = withContext(defaultContext) {
+    private suspend fun readUserId() = withContext(defaultContext) {
         userUid = getUserIdUseCase().first()
     }
 
@@ -104,14 +101,14 @@ class RegisterAdViewModel(
         return adRegistered ?: Ad()
     }
 
-    private suspend fun saveImages(adId: String, imageBytes: MutableList<ByteArray>) = withContext(saveImageContext) {
+    private suspend fun saveImages(adId: String, imageBytes: MutableList<ByteArray?>) = withContext(saveImageContext) {
         saveImagesUseCase(adId, imageBytes)
     }
 
-    private fun startRegisterAdProcess(imageBytes: MutableList<ByteArray>, ad: Ad) {
+    private fun startRegisterAdProcess(imageBytes: MutableList<ByteArray?>, ad: Ad) {
         viewModelScope.launch {
             setLoading()
-            readUserId(ad)
+            readUserId()
             if (userUid.isNullOrBlank()) {
                 _registerAdResult.postValue(Event(false))
             } else {
@@ -134,7 +131,19 @@ class RegisterAdViewModel(
 
     fun onClickRegisterAd() {
         if (isFormValid()) {
-            _prepareImages.postValue(Event(Unit))
+            startRegisterAdProcess(
+                imagesBytes,
+                Ad(
+                    images = emptyList(),
+                    state = stateSelected.value.safe(),
+                    category = categorySelected.value.safe(),
+                    title = title,
+                    description = description,
+                    price = price,
+                    phone = phone,
+                    advertiserId = ""
+                )
+            )
         }
     }
 
@@ -161,26 +170,7 @@ class RegisterAdViewModel(
         selectImage()
     }
 
-    fun onSelectImageFromGallery(path: String) {
-//        adImages.value?.run {
-//            set(imagePositionInEdition, path)
-//        }
-//        adImages.notifyObserver()
-    }
-
-    fun onPrepareImages(imageBytes: MutableList<ByteArray>) {
-        startRegisterAdProcess(
-            imageBytes,
-            Ad(
-                images = emptyList(),
-                state = stateSelected.value.safe(),
-                category = categorySelected.value.safe(),
-                title = title,
-                description = description,
-                price = price,
-                phone = phone,
-                advertiserId = ""
-            )
-        )
+    fun onPrepareImage(image: ByteArray) {
+        imagesBytes[imagePositionInEdition] = image
     }
 }
