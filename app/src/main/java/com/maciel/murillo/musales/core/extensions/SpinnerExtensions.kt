@@ -49,7 +49,7 @@ object SpinnerExtensions {
     }
 
     fun Spinner.setSpinnerValue(value: Any?) {
-        if (adapter != null ) {
+        if (adapter != null) {
             val position = this.selectedItemPosition
             setSelection(position, false)
             tag = position
