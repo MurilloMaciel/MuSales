@@ -1,5 +1,6 @@
 package com.maciel.murillo.musales.data.repository
 
+import com.maciel.murillo.musales.core.extensions.safe
 import com.maciel.murillo.musales.data.datasource.AuthDataSource
 import com.maciel.murillo.musales.data.datasource.LocalDataSource
 import com.maciel.murillo.musales.data.datasource.RemoteDataSource
@@ -23,9 +24,9 @@ class RepositoryImpl(
 
     override fun isUserLogged() = authDataSource.isUserLogged()
 
-    override suspend fun signup(email: String, password: String) = authDataSource.signup(email, password)
+    override suspend fun signup(email: String, password: String) = authDataSource.signup(email, password)?.uid.safe()
 
-    override suspend fun login(email: String, password: String) = authDataSource.login(email, password)
+    override suspend fun login(email: String, password: String) = authDataSource.login(email, password)?.uid.safe()
 
     override suspend fun logout() = authDataSource.logout()
 

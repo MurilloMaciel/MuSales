@@ -90,7 +90,7 @@ class RegisterAdViewModel(
     }
 
     private suspend fun readUserId() = withContext(defaultContext) {
-        userUid = getUserIdUseCase().first()
+        userUid = getUserIdUseCase.invoke()
     }
 
     private suspend fun saveAd(ad: Ad): Ad {

@@ -14,6 +14,8 @@ fun Boolean?.safeTrue() = this ?: true
 
 fun Long?.safe() = this ?: 0L
 
+fun ByteArray?.safe() = this ?: "".toByteArray()
+
 fun <T> List<T>?.safe() = this ?: mutableListOf<T>()
 
 fun <K, V> Map<K, V>?.safe() = this ?: mutableMapOf<K, V>()

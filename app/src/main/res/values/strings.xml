@@ -1,31 +1,38 @@
 <resources>
     <string name="app_name">MuSales</string>
-    <string name="title_activity_meus_anuncios">Meus Anúncios</string>
-    <string name="hint_phone_number">(xx) xxxxx-xxxx</string>
 
-    <!--    menu-->
-    <string name="menu_my_ads">My ads</string>
+    <string name="menu_my_ads">Meus anúncios</string>
     <string name="menu_login">Login</string>
     <string name="menu_logout">Logout</string>
 
-    <string name="auth_error_password_empty">Password cannot be empty</string>
-    <string name="auth_error_name_empty">Name cannot be empty</string>
-    <string name="auth_error_email_empty">E-mail cannot be empty</string>
-    <string name="auth_error_invalid_email">Need a valid e-mail</string>
-    <string name="auth_error_strongest_password">Use a strongest password</string>
-    <string name="auth_error_valid_email">Need a valid e-mail</string>
-    <string name="auth_error_account_already_exists">Account already exists</string>
-    <string name="auth_error_info_doesnt_exists">E-mail doesn\'t match any registered user</string>
-    <string name="auth_error_user_not_exists">Unregistered user</string>
-    <string name="auth_error_generic">An error occurred, try again</string>
+    <string name="auth_error_password_empty">Digite uma senha</string>
+    <string name="auth_error_name_empty">Digite um nome</string>
+    <string name="auth_error_email_empty">Digite um e-mail</string>
+    <string name="auth_error_invalid_email">E-mail inválido</string>
+    <string name="auth_error_strongest_password">Use uma senha mais forte</string>
+    <string name="auth_error_valid_email">E-mail inválido</string>
+    <string name="auth_error_account_already_exists">Essa conta já existe</string>
+    <string name="auth_error_info_doesnt_exists">Não há um usuário com essa conta de e-mail</string>
+    <string name="auth_error_user_not_exists">Usuário não cadastrado</string>
+    <string name="auth_error_generic">Ocorreu um erro, tente novamente</string>
 
     <string name="data_error_standard_read_error">Ocorreu um erro ao recuperar anúncios</string>
     <string name="data_error_standard_save_error">Ocorreu um erro ao salvar o anúncio</string>
     <string name="data_error_standard_delete_error">Ocorreu um erro ao remover o anúncio</string>
     <string name="data_error_standard_update_error">Ocorreu um erro ao atualizar o anúncio</string>
 
-    <string name="read_user_uid_standard_error">Ocorreu um erro recuperar seu id de usuário</string>
+    <string name="read_user_uid_standard_error">Ocorreu um erro recuperar seu identificador de usuário</string>
 
+    <string name="category_cars">Automóveis</string>
+    <string name="category_properties">Imóveis</string>
+    <string name="category_electronics">Eletrônicos</string>
+    <string name="category_fasion">Moda</string>
+    <string name="category_sports">Esportes</string>
+    <string name="category_music">Música</string>
+    <string name="category_child">Infantil</string>
+    <string name="category_jobs">Empregos</string>
+
+    <string name="hint_phone_number">(xx) xxxxx-xxxx</string>
     <string name="locale">REGIÃO</string>
     <string name="category">CATEGORIA</string>
     <string name="title">Título</string>
@@ -55,6 +62,8 @@
     <string name="how_to_select_image">Como deseja selecionar a foto</string>
     <string name="want_to_delete_ad_title">Remover anúncio</string>
     <string name="want_to_delete_ad_description">Deseja remover o anúncio?</string>
+    <string name="all_states">Todos</string>
+    <string name="all_categories">Todas</string>
 
     <string-array name="states">
         <item>AC</item>

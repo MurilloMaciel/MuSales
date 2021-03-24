@@ -8,7 +8,6 @@ import com.maciel.murillo.musales.domain.usecase.DeleteAdUseCase
 import com.maciel.murillo.musales.domain.usecase.GetMyAdsUseCase
 import com.maciel.murillo.musales.domain.usecase.ReadUserIdUseCase
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.first
 
 class MyAdsViewModel(
     private val getMyAdsUseCase: GetMyAdsUseCase,
@@ -67,7 +66,7 @@ class MyAdsViewModel(
 
     private suspend fun readUserUid() {
         withContext(Dispatchers.Default + exceptionHandlerReadUserUid) {
-            userUid = readUserIdUseCase().first()
+            userUid = readUserIdUseCase()
         }
     }
 
