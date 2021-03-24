@@ -44,6 +44,8 @@
     <string name="my_register_ad_title">Novo anúncio</string>
     <string name="cancel">Cancelar</string>
     <string name="to_filter">Filtrar</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
     <string name="select_state">Selecione o estado</string>
     <string name="select_category">Selecione a categoria</string>
     <string name="form_invalid">Preencha todos os campos do formulário</string>
@@ -51,6 +53,8 @@
     <string name="take_a_picture">Tirar uma foto</string>
     <string name="select_from_gallery">Selecionar da galeria</string>
     <string name="how_to_select_image">Como deseja selecionar a foto</string>
+    <string name="want_to_delete_ad_title">Remover anúncio</string>
+    <string name="want_to_delete_ad_description">Deseja remover o anúncio?</string>
 
     <string-array name="states">
         <item>AC</item>

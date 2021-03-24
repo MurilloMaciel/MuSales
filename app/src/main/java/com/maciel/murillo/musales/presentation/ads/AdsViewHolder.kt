@@ -1,7 +1,7 @@
 package com.maciel.murillo.musales.presentation.ads
 
 import androidx.recyclerview.widget.RecyclerView
-import com.maciel.murillo.musales.core.helper.AdListener
+import com.maciel.murillo.musales.core.listeners.AdListener
 import com.maciel.murillo.musales.databinding.ViewAdBinding
 import com.maciel.murillo.musales.domain.model.Ad
 

@@ -8,10 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.maciel.murillo.musales.R
-import com.maciel.murillo.musales.core.helper.AdListener
 import com.maciel.murillo.musales.core.helper.EventObserver
+import com.maciel.murillo.musales.core.listeners.MyAdListener
 import com.maciel.murillo.musales.databinding.FragmentMyAdsBinding
-import com.maciel.murillo.musales.presentation.ads.AdsAdapter
 import com.maciel.murillo.musales.presentation.ads.AdsFragmentDirections
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,8 +20,11 @@ class MyAdsFragment : Fragment() {
 
     private val navController by lazy { findNavController() }
 
-    private val adapter = AdsAdapter(object : AdListener {
+    private val adapter = MyAdsAdapter(object : MyAdListener {
+
         override fun onClickAd(position: Int) = myAdsViewModel.onClickAd(position)
+
+        override fun onClickDelete(position: Int) = onClickDeleteAd(position)
     })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,5 +61,11 @@ class MyAdsFragment : Fragment() {
         navigateToAdDetails.observe(viewLifecycleOwner, EventObserver { ad ->
             navController.navigate(AdsFragmentDirections.goToAdDetailsFrag(ad))
         })
+    }
+
+    private fun onClickDeleteAd(position: Int) {
+        DeleteAdDialog.show(childFragmentManager) {
+            myAdsViewModel.onClickDeleteAd(position)
+        }
     }
 }

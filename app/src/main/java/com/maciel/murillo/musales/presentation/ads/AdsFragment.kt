@@ -1,15 +1,13 @@
 package com.maciel.murillo.musales.presentation.ads
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.maciel.murillo.musales.R
-import com.maciel.murillo.musales.core.helper.AdListener
+import com.maciel.murillo.musales.core.listeners.AdListener
 import com.maciel.murillo.musales.core.helper.EventObserver
 import com.maciel.murillo.musales.data.model.GetAdsStatus
 import com.maciel.murillo.musales.databinding.FragmentAdsBinding

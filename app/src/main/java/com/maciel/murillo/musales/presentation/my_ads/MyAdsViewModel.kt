@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.maciel.murillo.musales.core.helper.Event
 import com.maciel.murillo.musales.data.model.GetAdsStatus
 import com.maciel.murillo.musales.domain.model.Ad
+import com.maciel.murillo.musales.domain.usecase.DeleteAdUseCase
 import com.maciel.murillo.musales.domain.usecase.GetMyAdsUseCase
 import com.maciel.murillo.musales.domain.usecase.ReadUserIdUseCase
 import kotlinx.coroutines.*
@@ -11,7 +12,8 @@ import kotlinx.coroutines.flow.first
 
 class MyAdsViewModel(
     private val getMyAdsUseCase: GetMyAdsUseCase,
-    private val readUserIdUseCase: ReadUserIdUseCase
+    private val readUserIdUseCase: ReadUserIdUseCase,
+    private val deleteAdUseCase: DeleteAdUseCase,
 ) : ViewModel() {
 
     lateinit var userUid: String
@@ -59,6 +61,10 @@ class MyAdsViewModel(
 
     private fun setConnectionError() = _getAdsStatus.postValue(GetAdsStatus.ERROR)
 
+    private fun setAds(ads: List<Ad>) {
+        this.myAds.postValue(ads)
+    }
+
     private suspend fun readUserUid() {
         withContext(Dispatchers.Default + exceptionHandlerReadUserUid) {
             userUid = readUserIdUseCase().first()
@@ -69,7 +75,7 @@ class MyAdsViewModel(
         viewModelScope.launch(Dispatchers.Default + exceptionHandlerReadMyAds) {
             readUserUid()
             setLoading()
-            myAds.postValue(getMyAdsUseCase(userUid))
+            setAds(getMyAdsUseCase(userUid))
             setRequestSuccess()
         }
     }
@@ -84,5 +90,18 @@ class MyAdsViewModel(
 
     fun onClickAd(position: Int) {
         _navigateToAdDetails.postValue(Event(myAds.value?.get(position) ?: Ad()))
+    }
+
+    fun onClickDeleteAd(position: Int) {
+        myAds.value?.let { myAds ->
+            viewModelScope.launch(Dispatchers.Default + exceptionHandlerReadMyAds) {
+                setLoading()
+                deleteAdUseCase(myAds[position])
+                setAds(myAds.filter {
+                    it.id != myAds[position].id
+                })
+                setRequestSuccess()
+            }
+        }
     }
 }

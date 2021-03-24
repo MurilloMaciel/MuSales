@@ -18,9 +18,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.maciel.murillo.musales.R
 import com.maciel.murillo.musales.core.helper.EventObserver
 import com.maciel.murillo.musales.databinding.FragmentRegisterAdBinding
+import com.maciel.murillo.musales.domain.model.Ad
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.ByteArrayOutputStream
 import java.util.*

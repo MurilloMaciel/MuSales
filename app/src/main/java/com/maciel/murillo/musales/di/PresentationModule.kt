@@ -34,7 +34,8 @@ val presentationModule = module {
     viewModel {
         MyAdsViewModel(
             getMyAdsUseCase = get(),
-            readUserIdUseCase = get()
+            readUserIdUseCase = get(),
+            deleteAdUseCase = get()
         )
     }
 

@@ -1,4 +1,4 @@
-package com.maciel.murillo.musales.core.helper
+package com.maciel.murillo.musales.core.listeners
 
 interface BindableAdapter<T> {
 
