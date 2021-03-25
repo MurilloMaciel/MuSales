@@ -14,21 +14,17 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.maciel.murillo.musales.R
-import com.maciel.murillo.musales.core.extensions.SpinnerExtensions
-import com.maciel.murillo.musales.core.extensions.SpinnerExtensions.setSpinnerEntries
-import com.maciel.murillo.musales.core.extensions.SpinnerExtensions.setSpinnerItemSelectedListener
+import com.maciel.murillo.musales.core.extensions.setSpinnerEntries
+import com.maciel.murillo.musales.core.extensions.setSpinnerItemSelectedListener
 import com.maciel.murillo.musales.core.helper.EventObserver
+import com.maciel.murillo.musales.core.listeners.ItemSelectedListener
 import com.maciel.murillo.musales.databinding.FragmentRegisterAdBinding
-import com.maciel.murillo.musales.domain.model.Ad
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -95,7 +91,7 @@ class RegisterAdFragment : Fragment() {
     private fun setUpSpinner(spinner: Spinner, arrayId: Int, onChange: (Int) -> Unit) = with(spinner) {
         setSpinnerEntries(resources.getStringArray(arrayId).toList())
 
-        setSpinnerItemSelectedListener(object : SpinnerExtensions.ItemSelectedListener {
+        setSpinnerItemSelectedListener(object : ItemSelectedListener {
             override fun onItemSelected(item: Any, position: Int) = onChange.invoke(position)
         })
     }
