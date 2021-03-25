@@ -1,15 +1,14 @@
 package com.maciel.murillo.musales.presentation.register_ad
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.maciel.murillo.musales.core.extensions.getCategoryFromPosition
+import com.maciel.murillo.musales.core.extensions.getStateFromPosition
 import com.maciel.murillo.musales.core.extensions.safe
 import com.maciel.murillo.musales.core.helper.Event
 import com.maciel.murillo.musales.domain.model.Ad
-import com.maciel.murillo.musales.domain.model.Category
-import com.maciel.murillo.musales.domain.model.State
 import com.maciel.murillo.musales.domain.usecase.ReadUserIdUseCase
 import com.maciel.murillo.musales.domain.usecase.RegisterAdUseCase
 import com.maciel.murillo.musales.domain.usecase.SaveImagesUseCase
@@ -29,14 +28,7 @@ class RegisterAdViewModel(
     private val updateAdUseCase: UpdateAdUseCase,
 ) : ViewModel() {
 
-    // TODO: 17/03/2021 falta tratar diferentes erros como erro pegando user id, erro de escrita no firebase, erro de salvamennto da imagem...
-
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.d("Murillo", "throwable ${throwable}")
-        Log.d("Murillo", "cause ${throwable.cause}")
-        Log.d("Murillo", "message ${throwable.message}")
-        Log.d("Murillo", "localizedMessage ${throwable.localizedMessage}")
-        Log.d("Murillo", "stackTrace ${throwable.stackTrace}")
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         setNotLoading()
         _registerAdResult.postValue(Event(false))
     }
@@ -54,11 +46,8 @@ class RegisterAdViewModel(
 
     var userUid: String? = null
 
-    val states = State.values().map { it.name }
-    val categories = Category.values().map { it.name }
-
-    val stateSelected = MutableLiveData<String>().apply { value = states[0] }
-    val categorySelected = MutableLiveData<String>().apply { value = categories[0] }
+    private val stateSelected = MutableLiveData<String>()
+    private val categorySelected = MutableLiveData<String>()
 
     private val _formInvalid = MutableLiveData<Event<Unit>>()
     val formInvalid: LiveData<Event<Unit>> = _formInvalid
@@ -147,12 +136,12 @@ class RegisterAdViewModel(
         }
     }
 
-    fun onStateChange(newState: String) {
-        stateSelected.postValue(newState)
+    fun onStateChange(newStatePosition: Int) {
+        stateSelected.postValue(newStatePosition.getStateFromPosition().name)
     }
 
-    fun onCategoryChange(newCategory: String) {
-        categorySelected.postValue(newCategory)
+    fun onCategoryChange(newCategoryPosition: Int) {
+        categorySelected.postValue(newCategoryPosition.getCategoryFromPosition().name)
     }
 
     fun onClickImage1() {

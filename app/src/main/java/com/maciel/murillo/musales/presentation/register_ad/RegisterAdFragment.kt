@@ -14,12 +14,18 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.maciel.murillo.musales.R
+import com.maciel.murillo.musales.core.extensions.SpinnerExtensions
+import com.maciel.murillo.musales.core.extensions.SpinnerExtensions.setSpinnerEntries
+import com.maciel.murillo.musales.core.extensions.SpinnerExtensions.setSpinnerItemSelectedListener
 import com.maciel.murillo.musales.core.helper.EventObserver
 import com.maciel.murillo.musales.databinding.FragmentRegisterAdBinding
 import com.maciel.murillo.musales.domain.model.Ad
@@ -76,6 +82,22 @@ class RegisterAdFragment : Fragment() {
 
     private fun setUpViews() = with(binding) {
         etValue.locale = Locale("pt", "BR")
+
+        setUpSpinner(spnState, R.array.states) { position ->
+            registerAdViewModel.onStateChange(position)
+        }
+
+        setUpSpinner(spnCategory, R.array.categories) { position ->
+            registerAdViewModel.onCategoryChange(position)
+        }
+    }
+
+    private fun setUpSpinner(spinner: Spinner, arrayId: Int, onChange: (Int) -> Unit) = with(spinner) {
+        setSpinnerEntries(resources.getStringArray(arrayId).toList())
+
+        setSpinnerItemSelectedListener(object : SpinnerExtensions.ItemSelectedListener {
+            override fun onItemSelected(item: Any, position: Int) = onChange.invoke(position)
+        })
     }
 
     private fun setUpObservers() = with(registerAdViewModel) {

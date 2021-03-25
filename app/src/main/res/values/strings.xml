@@ -2,8 +2,8 @@
     <string name="app_name">MuSales</string>
 
     <string name="menu_my_ads">Meus anúncios</string>
-    <string name="menu_login">Login</string>
-    <string name="menu_logout">Logout</string>
+    <string name="menu_login">Entrar</string>
+    <string name="menu_logout">Sair</string>
 
     <string name="auth_error_password_empty">Digite uma senha</string>
     <string name="auth_error_name_empty">Digite um nome</string>
@@ -66,6 +66,7 @@
     <string name="all_categories">Todas</string>
 
     <string-array name="states">
+        <item>Todos</item>
         <item>AC</item>
         <item>AL</item>
         <item>AM</item>
@@ -96,6 +97,7 @@
     </string-array>
 
     <string-array name="categories">
+        <item>Todas</item>
         <item>Automóveis</item>
         <item>Imóveis</item>
         <item>Eletrônicos</item>

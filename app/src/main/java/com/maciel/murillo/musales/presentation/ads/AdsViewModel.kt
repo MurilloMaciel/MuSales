@@ -1,8 +1,8 @@
 package com.maciel.murillo.musales.presentation.ads
 
 import androidx.lifecycle.*
-import com.maciel.murillo.musales.core.extensions.toCategory
-import com.maciel.murillo.musales.core.extensions.toState
+import com.maciel.murillo.musales.core.extensions.getCategoryFromPosition
+import com.maciel.murillo.musales.core.extensions.getStateFromPosition
 import com.maciel.murillo.musales.core.helper.Event
 import com.maciel.murillo.musales.data.model.GetAdsStatus
 import com.maciel.murillo.musales.domain.model.Ad
@@ -16,6 +16,7 @@ import com.maciel.murillo.musales.presentation.model.FilterTypes
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class AdsViewModel(
     private val isUserLoggedUseCase: IsUserLoggedUseCase,
@@ -120,13 +121,13 @@ class AdsViewModel(
         }
     }
 
-    fun onFilterState(stateToFilter: String) {
-        filterState = stateToFilter.toState()
+    fun onFilterState(stateToFilterPosition: Int) {
+        filterState = stateToFilterPosition.getStateFromPosition()
         getAds(withFilter = true)
     }
 
-    fun onFilterCategory(categoryToFilter: String) {
-        filterCategory = categoryToFilter.toCategory()
+    fun onFilterCategory(categoryToPosition: Int) {
+        filterCategory = categoryToPosition.getCategoryFromPosition()
         getAds(withFilter = true)
     }
 

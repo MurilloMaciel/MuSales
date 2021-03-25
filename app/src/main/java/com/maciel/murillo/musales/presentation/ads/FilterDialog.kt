@@ -12,12 +12,12 @@ import kotlin.properties.Delegates
 
 class FilterDialog : DialogFragment() {
 
-    private lateinit var onClickFilter: (String) -> Unit
+    private lateinit var onClickFilter: (Int) -> Unit
     private var filterTitleResource by Delegates.notNull<Int>()
     private lateinit var filterItems: List<String>
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireActivity())
+        val builder = AlertDialog.Builder(requireActivity(), R.style.AlertDialogTheme)
         builder.setTitle(getString(filterTitleResource))
 
         val binding = ViewSpinnerBinding.inflate(layoutInflater)
@@ -30,14 +30,14 @@ class FilterDialog : DialogFragment() {
         builder.setView(binding.root)
 
         builder.setPositiveButton(getString(R.string.to_filter)) { _, _ ->
-            onClickFilter.invoke(binding.spFilter.selectedItem.toString())
+            onClickFilter.invoke(binding.spFilter.selectedItemPosition)
         }
         builder.setNegativeButton(getString(R.string.cancel), null)
         return builder.create()
     }
 
     companion object {
-        fun show(manager: FragmentManager, onClickFilter: (String) -> Unit, filterTitleResource: Int, filterItems: List<String>) {
+        fun show(manager: FragmentManager, onClickFilter: (Int) -> Unit, filterTitleResource: Int, filterItems: List<String>) {
             val dialog = FilterDialog()
             dialog.onClickFilter = onClickFilter
             dialog.filterTitleResource = filterTitleResource

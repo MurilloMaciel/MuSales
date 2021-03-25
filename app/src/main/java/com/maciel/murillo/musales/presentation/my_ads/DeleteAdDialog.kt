@@ -13,7 +13,7 @@ class DeleteAdDialog : DialogFragment() {
 
     private lateinit var onClickDelete: () -> Unit
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) = AlertDialog.Builder(requireActivity()).apply {
+    override fun onCreateDialog(savedInstanceState: Bundle?) = AlertDialog.Builder(requireActivity(), R.style.AlertDialogTheme).apply {
         setTitle(getString(R.string.want_to_delete_ad_title))
         setMessage(getString(R.string.want_to_delete_ad_description))
         setNegativeButton(getString(R.string.no), null)

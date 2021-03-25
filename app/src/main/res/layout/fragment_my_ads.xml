@@ -93,7 +93,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:foregroundTint="@color/colorPrimary"
             android:backgroundTint="@color/colorPrimary"
             android:onClick="@{() -> vm.onClickToAdd()}"
             app:layout_constraintBottom_toBottomOf="parent"

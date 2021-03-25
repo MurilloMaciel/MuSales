@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.maciel.murillo.musales.R
-import com.maciel.murillo.musales.core.extensions.getCategoryName
-import com.maciel.murillo.musales.core.extensions.getStateName
 import com.maciel.murillo.musales.core.listeners.AdListener
 import com.maciel.murillo.musales.core.helper.EventObserver
 import com.maciel.murillo.musales.data.model.GetAdsStatus
@@ -121,18 +119,18 @@ class AdsFragment : Fragment() {
     private fun openStateFilterDialog() {
         FilterDialog.show(
             manager = childFragmentManager,
-            filterItems = State.values().map { getStateName(it) },
+            filterItems = resources.getStringArray(R.array.states).toList(),
             filterTitleResource = R.string.select_state,
-            onClickFilter = { state -> adsViewModel.onFilterState(state) }
+            onClickFilter = { statePosition -> adsViewModel.onFilterState(statePosition) }
         )
     }
 
     private fun openCategoryFilterDialog() {
         FilterDialog.show(
             manager = childFragmentManager,
-            filterItems = Category.values().map { getCategoryName(it) },
+            filterItems = resources.getStringArray(R.array.categories).toList(),
             filterTitleResource = R.string.select_category,
-            onClickFilter = { category -> adsViewModel.onFilterCategory(category) }
+            onClickFilter = { categoryPosition -> adsViewModel.onFilterCategory(categoryPosition) }
         )
     }
 
